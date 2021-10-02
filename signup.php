@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($email_check_count == 0) {
         $query1 = "INSERT INTO users (name,phone_no) VALUES ('{$name}','{$ph}');";
         $result1 = mysqli_query($db_connect, $query1);
-        $query2="INSERT INTO login (email,password,user_id) VALUES ('{$email}','{$pass}',(select uid from users where phone_no='{$ph}'";
+        $result1data = mysqli_insert_id($db_connect);
+        $query2="INSERT INTO login (email,password,user_id) VALUES ('{$email}','{$pass}','{$result1data}')";
         $result2 = mysqli_query($db_connect, $query2);
         if ($result1 && $result2) {
             $query3 = "SELECT uid from users where phone_no='{$ph}'";
