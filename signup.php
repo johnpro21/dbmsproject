@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="container">
         <div class="text-center mt-3"><img src="/logo.png" /></div>
         <div class="row justify-content-center mt-2">
-            <form class="col-4 bg-light bg-gradient text-center shadow p-3 mb-5 rounded-3" method="POST" action="">
+            <form class="col-md-4 bg-light bg-gradient text-center shadow p-3 mb-5 rounded-3" method="POST" action="">
                 <h2 class="mt-3 mb-2">Sign Up</h2>
                 <?php if (isset($error)) { ?>
                     <span class="text-danger"><?php echo $error; ?></span>

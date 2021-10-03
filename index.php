@@ -1,5 +1,11 @@
 <?php include('session.php');
-require('config.php') ?>
+require('config.php');
+$uid = $_SESSION['uid'];
+//echo $uid;
+$userdata_query = "SELECT * from users where uid='{$uid}'";
+$userdata_result = mysqli_query($db_connect, $userdata_query);
+$user_data = mysqli_fetch_assoc($userdata_result);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +20,6 @@ require('config.php') ?>
         .tab {
             border: 1px solid #ccc;
             background-color: #f1f1f1;
-            min-height: 300px;
         }
 
         /* Style the buttons inside the tab */
@@ -47,7 +52,6 @@ require('config.php') ?>
             padding: 0px 12px;
             border: 1px solid #ccc;
             border-left: none;
-            min-height: 300px;
         }
     </style>
 </head>
@@ -72,7 +76,11 @@ require('config.php') ?>
                         <a class="nav-link disabled">Disabled</a>
                     </li> -->
                 </ul>
-
+                <div class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link disabled"><?php echo $user_data['name']; ?></a>
+                    </li>
+                </div>
                 <div>
                     <a class="btn btn-danger ms-3 me-3" href="/logout.php">Logout</a>
                 </div>
@@ -86,16 +94,16 @@ require('config.php') ?>
                 <div class="col-md-6">
                     <form class="form-inline">
                         <select name="h_name" class="form-control" onchange="this.form.submit()">
+
                             <?php if (isset($_GET['h_name'])) { ?>
                                 <option value="<?php echo $_GET['h_name']; ?>">(<?php echo $_GET['h_name']; ?>) Change Hospital</option>
+                                <option value="" disabled></option>
                             <?php
                             } else {
                             ?>
-                                <option value="">Choose Hospital</option>
+                                <option value="" selected>Choose Hospital</option>
                             <?php
                             }
-                            ?>
-                            <?php
                             $q2 = "SELECT * from hos_name";
                             $res2 = mysqli_query($db_connect, $q2);
 
@@ -108,63 +116,101 @@ require('config.php') ?>
                         </select>
                     </form>
                 </div>
+
             </div>
 
             <?php if (isset($_GET['h_name'])) { ?>
                 <div class="row">
                     <div class="col-md-3 tab">
-                        <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">My Requirements</button>
-                        <button class="tablinks" onclick="openCity(event, 'Paris')">Requirements Near</button>
+                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" id="defaultOpen">My Requirements</button>
+                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')">Requirements Near</button>
                     </div>
 
-                    <div id="London" class="col-md-9 tabcontent">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Launch demo modal
-                        </button>
+                    <div id="my_requirment" class="col-md-9 tabcontent">
+                        <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button>
+                        <table class="table">
+                            <?php
+                            $selected_hname = $_GET['h_name'];
+                            $selected_uid = $_SESSION['uid'];
+                            $my_query = "SELECT * FROM resource_rqst WHERE reqster_h_name='$selected_hname' AND reqster_uid='$selected_uid';";
+                            $result_my = mysqli_query($db_connect, $my_query);
+                            ?>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Handle</th>
+                                    <th scope="col">Actions</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                while ($data_my = mysqli_fetch_array($result_my)) { ?>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        
+                                        <td><?php echo $data_my['resource_type'];?></td>
+                                        <td><?php echo $data_my['description'];?></td>
+                                        <td><?php echo $data_my['quantity'];?></td>
+                                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+
                     </div>
 
-                    <div id="Paris" class="col-md-9 tabcontent">
-                        <h3>Paris</h3>
-                        <p>Paris is the capital of France.</p>
-                    </div>
-
-                </div>
-
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
+                    <div id="requirment_near" class="col-md-9 tabcontent">
+                        <?php
+                        $selected_hname = $_GET['h_name'];
+                        $near_query = "SELECT * FROM resource_rqst WHERE reqster_h_name='$selected_hname';";
+                        $result_near = mysqli_query($db_connect, $near_query); ?>
+                        <div class="row">
+                            <?php while ($data_near = mysqli_fetch_array($result_near)) { ?>
+                                <div class="col-md-4">
+                                    <div class="card border-success mb-3">
+                                        <div class="card-header bg-transparent border-success">Header</div>
+                                        <div class="card-body text-success">
+                                            <h5 class="card-title">Success card title</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-success">Footer</div>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
+
                     </div>
+                    <div id="new_requirment" class="col-md-9 tabcontent">
+
+                    </div>
+
                 </div>
+
+
+
             <?php } ?>
             <script>
-                function openCity(evt, cityName) {
+                function changeTab(evt, tabName) {
                     var i, tabcontent, tablinks;
                     tabcontent = document.getElementsByClassName("tabcontent");
                     for (i = 0; i < tabcontent.length; i++) {
                         tabcontent[i].style.display = "none";
                     }
                     tablinks = document.getElementsByClassName("tablinks");
-                    for (i = 0; i < tablinks.length; i++) {
-                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    if (tabName != "new_requirment") {
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+                        }
                     }
-                    document.getElementById(cityName).style.display = "block";
+                    document.getElementById(tabName).style.display = "block";
+
                     evt.currentTarget.className += " active";
                 }
 
