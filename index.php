@@ -5,6 +5,20 @@ $uid = $_SESSION['uid'];
 $userdata_query = "SELECT * from users where uid='{$uid}'";
 $userdata_result = mysqli_query($db_connect, $userdata_query);
 $user_data = mysqli_fetch_assoc($userdata_result);
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $description = $_POST['description'];
+    $resource_type = $_POST['resource_type'];
+    $quantity = $_POST['quantity'];
+    $reqster_name = $_POST['reqster_name'];
+    $reqster_phno = $_POST['reqster_phno'];
+    $reqster_uid = $_POST['reqster_uid'];
+    $reqster_h_name = $_POST['reqster_h_name'];
+    $add_query = "INSERT INTO resource_rqst (description,quantity,resource_type,reqster_name,reqster_phno,reqster_uid,reqster_h_name) VALUES ('$description','$quantity','$resource_type','$reqster_name','$reqster_phno','$reqster_uid','$reqster_h_name');";
+    $add_result=mysqli_query($db_connect,$add_query);
+    
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +63,6 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
         /* Style the tab content */
         .tabcontent {
-            padding: 0px 12px;
             border: 1px solid #ccc;
             border-left: none;
         }
@@ -93,7 +106,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             <div class="row pb-3 justify-content-center">
                 <div class="col-md-6">
                     <form class="form-inline">
-                        <select name="h_name" class="form-control" onchange="this.form.submit()">
+                        <select name="h_name" class="form-select" onchange="this.form.submit()">
 
                             <?php if (isset($_GET['h_name'])) { ?>
                                 <option value="<?php echo $_GET['h_name']; ?>">(<?php echo $_GET['h_name']; ?>) Change Hospital</option>
@@ -121,12 +134,12 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
             <?php if (isset($_GET['h_name'])) { ?>
                 <div class="row">
-                    <div class="col-md-3 tab">
+                    <div class="col-md-3 tab" style="padding-right: 0px; padding-left: 0px;">
                         <button class="tablinks" onclick="changeTab(event, 'my_requirment')" id="defaultOpen">My Requirements</button>
                         <button class="tablinks" onclick="changeTab(event, 'requirment_near')">Requirements Near</button>
                     </div>
 
-                    <div id="my_requirment" class="col-md-9 tabcontent">
+                    <div id="my_requirment" class="col-md-9 tabcontent bg-light pt-3">
                         <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button>
                         <table class="table">
                             <?php
@@ -137,23 +150,21 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                             ?>
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                    <th scope="col">Actions</th>
-                                    
+                                    <th scope="col">Resource Type</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col"></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 while ($data_my = mysqli_fetch_array($result_my)) { ?>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        
-                                        <td><?php echo $data_my['resource_type'];?></td>
-                                        <td><?php echo $data_my['description'];?></td>
-                                        <td><?php echo $data_my['quantity'];?></td>
+
+                                        <td><?php echo $data_my['resource_type']; ?></td>
+                                        <td><?php echo $data_my['description']; ?></td>
+                                        <td><?php echo $data_my['quantity']; ?></td>
                                         <td><button class="btn btn-danger btn-sm">Delete</button></td>
                                     </tr>
                                 <?php
@@ -164,7 +175,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
                     </div>
 
-                    <div id="requirment_near" class="col-md-9 tabcontent">
+                    <div id="requirment_near" class="col-md-9 tabcontent bg-light pt-3">
                         <?php
                         $selected_hname = $_GET['h_name'];
                         $near_query = "SELECT * FROM resource_rqst WHERE reqster_h_name='$selected_hname';";
@@ -173,12 +184,12 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                             <?php while ($data_near = mysqli_fetch_array($result_near)) { ?>
                                 <div class="col-md-4">
                                     <div class="card border-success mb-3">
-                                        <div class="card-header bg-transparent border-success">Header</div>
+                                        <div class="card-header bg-transparent border-success"><?php echo $data_near['resource_type']; ?></div>
                                         <div class="card-body text-success">
-                                            <h5 class="card-title">Success card title</h5>
-                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <h5 class="card-title"><?php echo $data_near['description']; ?> - <?php echo $data_near['quantity']; ?></h5>
+                                            <p class="card-text"><?php echo $data_near['reqster_name']; ?><br><?php echo $data_near['reqster_phno']; ?></p>
                                         </div>
-                                        <div class="card-footer bg-transparent border-success">Footer</div>
+                                        <a class="btn btn-success border-success" herf="tel:<?php $data_near['reqster_phno']; ?>">Call Now</a>
                                     </div>
                                 </div>
                             <?php
@@ -187,8 +198,28 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                         </div>
 
                     </div>
-                    <div id="new_requirment" class="col-md-9 tabcontent">
-
+                    <div id="new_requirment" class="col-md-9 tabcontent bg-light" style=" padding-right: 0px;padding-left: 0px;">
+                        <form class="m-3" method="POST">
+                            <select name="resource_type" class="form-select">
+                                <option value="">Select Requirement Type</option>
+                                <option value="Tifin">Tifin</option>
+                                <option value="Medicine">Medicine</option>
+                                <option value="Oxygen">Oxygen</option>
+                                <option value="Ambulance">Ambulance</option>
+                                <option value="Blood">Blood</option>
+                            </select>
+                            <div class="mb-2 mt-1">
+                                <input class="form-control" type="text" name="description" required placeholder="Description" />
+                            </div>
+                            <div class="mb-2 mt-1">
+                                <input class="form-control" type="number" name="quantity" required placeholder="Quantity" />
+                            </div>
+                            <input type="text" name="reqster_name" value="<?php echo $user_data['name']; ?>" hidden />
+                            <input type="text" name="reqster_phno" value="<?php echo $user_data['phone_no']; ?>" hidden />
+                            <input type="text" name="reqster_uid" value="<?php echo $user_data['uid']; ?>" hidden />
+                            <input type="text" name="reqster_h_name" value="<?php echo $selected_hname; ?>" hidden />
+                            <button class="btn btn-primary btn-block" type="submit" onsubmit="">Add Requirment</button>
+                        </form>
                     </div>
 
                 </div>
