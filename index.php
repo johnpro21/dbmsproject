@@ -124,8 +124,9 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             <?php if (isset($_GET['h_name'])) { ?>
                 <div class="row">
                     <div class="col-md-3 tab" style="padding-right: 0px; padding-left: 0px;">
-                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" id="defaultOpen">My Requirements</button>
-                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')">Requirements Near</button>
+                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')" id="defaultOpen">Requirements Near</button>
+                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" >My Requirements</button>
+
                     </div>
 
                     <div id="my_requirment" class="col-md-9 tabcontent bg-light pt-3">
