@@ -63,7 +63,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Hospital Resource Management</a>
+            <a class="navbar-brand" style="font-size: 90%;" href="#">Hospital Resource Management</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
