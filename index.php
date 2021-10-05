@@ -6,18 +6,7 @@ $userdata_query = "SELECT * from users where uid='{$uid}'";
 $userdata_result = mysqli_query($db_connect, $userdata_query);
 $user_data = mysqli_fetch_assoc($userdata_result);
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $description = $_POST['description'];
-    $resource_type = $_POST['resource_type'];
-    $quantity = $_POST['quantity'];
-    $reqster_name = $_POST['reqster_name'];
-    $reqster_phno = $_POST['reqster_phno'];
-    $reqster_uid = $_POST['reqster_uid'];
-    $reqster_h_name = $_POST['reqster_h_name'];
-    $add_query = "INSERT INTO resource_rqst (description,quantity,resource_type,reqster_name,reqster_phno,reqster_uid,reqster_h_name) VALUES ('$description','$quantity','$resource_type','$reqster_name','$reqster_phno','$reqster_uid','$reqster_h_name');";
-    $add_result=mysqli_query($db_connect,$add_query);
-    
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -165,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         <td><?php echo $data_my['resource_type']; ?></td>
                                         <td><?php echo $data_my['description']; ?></td>
                                         <td><?php echo $data_my['quantity']; ?></td>
-                                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                                        <td><button class="btn btn-danger btn-sm">Delete</button> <button class="btn btn-success btn-sm">Update</button></td>
                                     </tr>
                                 <?php
                                 }
@@ -189,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                             <h5 class="card-title"><?php echo $data_near['description']; ?> - <?php echo $data_near['quantity']; ?></h5>
                                             <p class="card-text"><?php echo $data_near['reqster_name']; ?><br><?php echo $data_near['reqster_phno']; ?></p>
                                         </div>
-                                        <a class="btn btn-success border-success" herf="tel:<?php $data_near['reqster_phno']; ?>">Call Now</a>
+                                        <a class="btn btn-success border-success" href="tel:<?php $data_near['reqster_phno']; ?>">Call Now</a>
                                     </div>
                                 </div>
                             <?php
@@ -199,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                     </div>
                     <div id="new_requirment" class="col-md-9 tabcontent bg-light" style=" padding-right: 0px;padding-left: 0px;">
-                        <form class="m-3" method="POST">
+                        <form class="m-3" method="POST" id="add_new" action="/add_new.php">
                             <select name="resource_type" class="form-select">
                                 <option value="">Select Requirement Type</option>
                                 <option value="Tifin">Tifin</option>
@@ -218,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <input type="text" name="reqster_phno" value="<?php echo $user_data['phone_no']; ?>" hidden />
                             <input type="text" name="reqster_uid" value="<?php echo $user_data['uid']; ?>" hidden />
                             <input type="text" name="reqster_h_name" value="<?php echo $selected_hname; ?>" hidden />
-                            <button class="btn btn-primary btn-block" type="submit" onsubmit="">Add Requirment</button>
+                            <button class="btn btn-primary btn-block" type="submit">Add Requirment</button>
                         </form>
                     </div>
 
