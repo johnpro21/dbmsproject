@@ -34,10 +34,11 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             width: 100%;
             border: none;
             outline: none;
-            text-align: left;
+            text-align: center;
             cursor: pointer;
             transition: 0.3s;
             font-size: 17px;
+
         }
 
         /* Change background color of buttons on hover */
@@ -123,13 +124,23 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
             <?php if (isset($_GET['h_name'])) { ?>
                 <div class="row">
-                    <div class="col-md-3 tab" style="padding-right: 0px; padding-left: 0px;">
-                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')" <?php if(isset($_GET['tab'])){if($_GET['tab']!=1){ echo'id="defaultOpen"';}}else{ echo'id="defaultOpen"';}?>>Requirements Near</button>
-                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" <?php  if(isset($_GET['tab'])){ if($_GET['tab']==1){ echo'id="defaultOpen"';}}?> >My Requirements</button>
+                    <div class="col-md-2 tab" style="padding-right: 0px; padding-left: 0px;">
+                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')" <?php if (isset($_GET['tab'])) {
+                                                                                                    if ($_GET['tab'] != 1) {
+                                                                                                        echo 'id="defaultOpen"';
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    echo 'id="defaultOpen"';
+                                                                                                } ?>>Requirements Near</button>
+                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" <?php if (isset($_GET['tab'])) {
+                                                                                                    if ($_GET['tab'] == 1) {
+                                                                                                        echo 'id="defaultOpen"';
+                                                                                                    }
+                                                                                                } ?>>My Requirements</button>
                     </div>
 
-                    <div id="my_requirment" class="col-md-9 tabcontent bg-light pt-3">
-                        
+                    <div id="my_requirment" class="col-md-10 tabcontent bg-light pt-3">
+
                         <table class="table">
                             <?php
                             $selected_hname = $_GET['h_name'];
@@ -161,18 +172,19 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                                 ?>
                             </tbody>
                         </table>
-                        <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button><hr/>
+                        <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button>
+                        <hr />
                         <script>
-                            deleteResource = function(id){
-                                if(confirm('Do You Want to Delete?')){
+                            deleteResource = function(id) {
+                                if (confirm('Do You Want to Delete?')) {
                                     //alert("Deleted"+id);
-                                    window.location.href=encodeURI('/del.php?id='+id+'&h_name=<?php echo $_GET['h_name']; ?>');
+                                    window.location.href = encodeURI('/del.php?id=' + id + '&h_name=<?php echo $_GET['h_name']; ?>');
                                 }
                             }
                         </script>
                     </div>
 
-                    <div id="requirment_near" class="col-md-9 tabcontent bg-light pt-3">
+                    <div id="requirment_near" class="col-md-10 tabcontent bg-light pt-3">
                         <?php
                         $selected_hname = $_GET['h_name'];
                         $near_query = "SELECT * FROM resource_rqst WHERE reqster_h_name='$selected_hname';";
@@ -195,7 +207,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                         </div>
 
                     </div>
-                    <div id="new_requirment" class="col-md-9 tabcontent bg-light" style=" padding-right: 0px;padding-left: 0px;">
+                    <div id="new_requirment" class="col-md-10 tabcontent bg-light" style=" padding-right: 0px;padding-left: 0px;">
                         <form class="m-3" method="POST" id="add_new" action="/add_new.php">
                             <select name="resource_type" class="form-select">
                                 <option value="">Select Requirement Type</option>
@@ -246,9 +258,13 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                 document.getElementById("defaultOpen").click();
             </script>
         </div>
+        <div class="mt-5 text-center">
+            <img src="./logo.png" class="img-fluid" />
+            <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
+        </div>
     </main>
 
-    <script src="/js/bootstrap.min.js"></script>
+    <!-- <script src="/js/bootstrap.min.js"></script> -->
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 
