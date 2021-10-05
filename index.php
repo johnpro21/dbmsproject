@@ -56,13 +56,14 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             border: 1px solid #ccc;
             border-left: none;
         }
+
         @media screen and (max-width: 480px) {
             .tab button {
-            padding: 10px 5px;
-            text-align: center;
-            font-size: 17px;
+                padding: 10px 5px;
+                text-align: center;
+                font-size: 17px;
 
-        }
+            }
         }
     </style>
 </head>
@@ -71,7 +72,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" style="font-size: 90%;" href="#">Hospital Resource Management</a>
+            <a class="navbar-brand" style="font-size: 90%;" href="/index.php">Hospital Resource Management</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -89,7 +90,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                 </ul>
                 <div class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link disabled"><?php echo $user_data['name']; ?></a>
+                        <a class="nav-link" href='/profile.php'><?php echo $user_data['name']; ?></a>
                     </li>
                 </div>
                 <div>
@@ -206,13 +207,12 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                                             <h5 class="card-title"><?php echo $data_near['description']; ?> - <?php echo $data_near['quantity']; ?></h5>
                                             <p class="card-text"><?php echo $data_near['reqster_name']; ?><br><?php echo $data_near['reqster_phno']; ?></p>
                                         </div>
-                                        <a class="btn btn-success border-success" href="tel:<?php $data_near['reqster_phno']; ?>">Call Now</a>
+                                        <a class="btn btn-success border-success" href="tel:'<?php $data_near['reqster_phno']; ?>'">Call Now</a>
                                     </div>
                                 </div>
                             <?php
                             }
-                            if(mysqli_num_rows($result_near)==0)
-                            {
+                            if (mysqli_num_rows($result_near) == 0) {
                                 echo "<h3 class='text-center mt-3'>No Records Found</h3>";
                             }
                             ?>
@@ -270,12 +270,12 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                 document.getElementById("defaultOpen").click();
             </script>
         </div>
-        <div class="mt-5 text-center">
-            <img src="./logo.png" class="img-fluid" />
-            <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
-        </div>
-    </main>
 
+    </main>
+    <div class="mt-5 text-center">
+        <img src="./logo.png" class="img-fluid" />
+        <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
+    </div>
     <!-- <script src="/js/bootstrap.min.js"></script> -->
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
