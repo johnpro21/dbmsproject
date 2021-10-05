@@ -34,7 +34,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             width: 100%;
             border: none;
             outline: none;
-            text-align: center;
+            text-align: left;
             cursor: pointer;
             transition: 0.3s;
             font-size: 17px;
@@ -55,6 +55,14 @@ $user_data = mysqli_fetch_assoc($userdata_result);
         .tabcontent {
             border: 1px solid #ccc;
             border-left: none;
+        }
+        @media screen and (max-width: 480px) {
+            .tab button {
+            padding: 10px 5px;
+            text-align: center;
+            font-size: 17px;
+
+        }
         }
     </style>
 </head>
@@ -202,6 +210,10 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                                     </div>
                                 </div>
                             <?php
+                            }
+                            if(mysqli_num_rows($result_near)==0)
+                            {
+                                echo "<h3 class='text-center mt-3'>No Records Found</h3>";
                             }
                             ?>
                         </div>
