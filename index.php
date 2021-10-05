@@ -16,7 +16,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hospital Resource Mangement</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Style the tab */
@@ -124,13 +124,12 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             <?php if (isset($_GET['h_name'])) { ?>
                 <div class="row">
                     <div class="col-md-3 tab" style="padding-right: 0px; padding-left: 0px;">
-                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')" id="defaultOpen">Requirements Near</button>
-                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" >My Requirements</button>
-
+                        <button class="tablinks" onclick="changeTab(event, 'requirment_near')" <?php if(isset($_GET['tab'])){if($_GET['tab']!=1){ echo'id="defaultOpen"';}}else{ echo'id="defaultOpen"';}?>>Requirements Near</button>
+                        <button class="tablinks" onclick="changeTab(event, 'my_requirment')" <?php  if(isset($_GET['tab'])){ if($_GET['tab']==1){ echo'id="defaultOpen"';}}?> >My Requirements</button>
                     </div>
 
                     <div id="my_requirment" class="col-md-9 tabcontent bg-light pt-3">
-                        <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button>
+                        
                         <table class="table">
                             <?php
                             $selected_hname = $_GET['h_name'];
@@ -143,7 +142,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                                     <th scope="col">Resource Type</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Actions</th>
 
                                 </tr>
                             </thead>
@@ -155,14 +154,22 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                                         <td><?php echo $data_my['resource_type']; ?></td>
                                         <td><?php echo $data_my['description']; ?></td>
                                         <td><?php echo $data_my['quantity']; ?></td>
-                                        <td><button class="btn btn-danger btn-sm">Delete</button> <button class="btn btn-success btn-sm">Update</button></td>
+                                        <td><button class="btn btn-danger btn-sm" onclick="deleteResource('<?php echo $data_my['resourse_id']; ?>')">Delete</button> </td>
                                     </tr>
                                 <?php
                                 }
                                 ?>
                             </tbody>
                         </table>
-
+                        <button class="btn btn-success" onclick="changeTab(event, 'new_requirment')">Add New</button><hr/>
+                        <script>
+                            deleteResource = function(id){
+                                if(confirm('Do You Want to Delete?')){
+                                    //alert("Deleted"+id);
+                                    window.location.href=encodeURI('/del.php?id='+id+'&h_name=<?php echo $_GET['h_name']; ?>');
+                                }
+                            }
+                        </script>
                     </div>
 
                     <div id="requirment_near" class="col-md-9 tabcontent bg-light pt-3">
