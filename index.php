@@ -229,7 +229,7 @@ $_SESSION['status']="";
                                 <option value="Blood">Blood</option>
                             </select>
                             <div class="mb-2 mt-1">
-                                <input class="" type="text" name="description" required placeholder="Description" />
+                                <input class="form-control" type="text" name="description" required placeholder="Description" />
                             </div>
                             <div class="mb-2 mt-1">
                                 <input class="form-control" type="number" name="quantity" required placeholder="Quantity" />
