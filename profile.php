@@ -80,9 +80,6 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             <div class="d-grid mb-2">
                 <button class="btn btn-primary btn-block" type="submit" formaction="/updateAcc.php" value="update">Update Profile</button>
             </div>
-            <div class="d-grid mb-2">
-                <button class="btn btn-danger btn-sm" type="submit" formaction="/delAcc.php" value="delete">Delete</button>
-            </div>
         </form>
     </main>
     <div class="mt-5 text-center">

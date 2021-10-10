@@ -229,7 +229,7 @@ $_SESSION['status']="";
                                 <option value="Blood">Blood</option>
                             </select>
                             <div class="mb-2 mt-1">
-                                <input class="form-control" type="text" name="description" required placeholder="Description" />
+                                <input class="" type="text" name="description" required placeholder="Description" />
                             </div>
                             <div class="mb-2 mt-1">
                                 <input class="form-control" type="number" name="quantity" required placeholder="Quantity" />
@@ -238,7 +238,7 @@ $_SESSION['status']="";
                             <input type="text" name="reqster_phno" value="<?php echo $user_data['phone_no']; ?>" hidden />
                             <input type="text" name="reqster_uid" value="<?php echo $user_data['uid']; ?>" hidden />
                             <input type="text" name="reqster_h_name" value="<?php echo $selected_hname; ?>" hidden />
-                            <button class="btn btn-primary btn-block" type="submit">Add Requirment</button>
+                            <button class="btn btn-success btn-block" type="submit">Add Requirment</button>
                         </form>
                     </div>
 
