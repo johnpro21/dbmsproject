@@ -4,7 +4,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $query = "select * from login where email = '$email' and password ='$password'";
+    $query = "CALL select_login('$email','$password')";
     $results = mysqli_query($db_connect, $query);
     $count = mysqli_num_rows($results);
     if ($count == 1) {

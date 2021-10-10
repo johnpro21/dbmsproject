@@ -5,7 +5,7 @@ $uid = $_SESSION['uid'];
 $userdata_query = "SELECT * from users where uid='{$uid}'";
 $userdata_result = mysqli_query($db_connect, $userdata_query);
 $user_data = mysqli_fetch_assoc($userdata_result);
-
+$_SESSION['status']="";
 
 
 ?>
@@ -186,8 +186,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
                         <script>
                             deleteResource = function(id) {
                                 if (confirm('Do You Want to Delete?')) {
-                                    //alert("Deleted"+id);
-                                    window.location.href = encodeURI('/del.php?id=' + id + '&h_name=<?php echo $_GET['h_name']; ?>');
+                                    window.location.href = encodeURI('/delReq.php?id=' + id + '&h_name=<?php echo $_GET['h_name']; ?>');
                                 }
                             }
                         </script>

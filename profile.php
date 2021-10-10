@@ -5,9 +5,6 @@ $uid = $_SESSION['uid'];
 $userdata_query = "SELECT * from users where uid='{$uid}'";
 $userdata_result = mysqli_query($db_connect, $userdata_query);
 $user_data = mysqli_fetch_assoc($userdata_result);
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,13 +49,46 @@ $user_data = mysqli_fetch_assoc($userdata_result);
         </div>
     </nav>
 
-    <main class="container">
+    <main class="row justify-content-center">
 
+        <form class="col-md-4 bg-light bg-gradient text-center shadow p-3 mb-5 rounded-3 " method="POST">
+            <?php
+            $userdata_query = "CALL SelectUserData('$uid');";
+            $userdata_result = mysqli_query($db_connect, $userdata_query);
+            $user_data = mysqli_fetch_assoc($userdata_result);
+            $status=$_SESSION['status'];
+            //print_r($user_data);
+            ?>
+            <h2 class="mt-3 mb-2">Profile</h2>
+            <?php if (isset($status)) { ?>
+                <span class="text-success"><?php echo $status;
+                unset($_SESSION['status']); ?></span>
+            <?php } ?><br>
+            <img src="/profile_icon.png" class="img-fluid mt-3" style="height: 200px; width:auto;">
+            <div class="mb-2 mt-1">
+                <input class="form-control mt-5" type="text" name="name" value="<?php echo $user_data['name']; ?>" placeholder="Name" />
+            </div>
+            <div class="mb-2">
+                <input class="form-control" type="email" name="email" value="<?php echo $user_data['email']; ?>" disabled />
+            </div>
+            <div class="mb-2">
+                <input class="form-control" type="tel" name="phoneno" required placeholder="Phone Number" value="<?php echo $user_data['phone_no']; ?>" pattern="[0-9]{10}" maxlength="10" title="Enter Your 10 digit Moblie Number" />
+            </div>
+            <div class="mb-2">
+                <input class="form-control" type="password" name="password" required value="<?php echo $user_data['password']; ?>" placeholder="Password" />
+            </div>
+            <div class="d-grid mb-2">
+                <button class="btn btn-primary btn-block" type="submit" formaction="/updateAcc.php" value="update">Update Profile</button>
+            </div>
+            <div class="d-grid mb-2">
+                <button class="btn btn-danger btn-sm" type="submit" formaction="/delAcc.php" value="delete">Delete</button>
+            </div>
+        </form>
     </main>
     <div class="mt-5 text-center">
-            <img src="./logo.png" class="img-fluid" />
-            <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
-        </div>
+        <img src="./logo.png" class="img-fluid" />
+        <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
+    </div>
 
     <!-- <script src="/js/bootstrap.min.js"></script> -->
     <script src="/js/bootstrap.bundle.min.js"></script>
