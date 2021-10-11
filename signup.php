@@ -6,25 +6,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $ph = $_POST['phoneno'];
     $pass = $_POST['password'];
-    //echo $name, $email, $ph, $pass;
+    //checking email id if already exits
     $query_email_check = "SELECT email FROM login WHERE email='$email';";
     $result_email_check = mysqli_query($db_connect, $query_email_check);
     $email_check_count = mysqli_num_rows($result_email_check);
     if ($email_check_count == 0) {
+        //inserting into users table
         $query1 = "INSERT INTO users (name,phone_no) VALUES ('{$name}','{$ph}');";
         $result1 = mysqli_query($db_connect, $query1);
         $result1data = mysqli_insert_id($db_connect);
+        //inserting into login table
         $query2="INSERT INTO login (email,password,user_id) VALUES ('{$email}','{$pass}','{$result1data}')";
         $result2 = mysqli_query($db_connect, $query2);
+        //checking does the query worked or not
         if ($result1 && $result2) {
             $query3 = "SELECT uid from users where phone_no='{$ph}'";
             $r1 = mysqli_query($db_connect, $query3) or die("bad query!");
             $uid = mysqli_fetch_array($r1);
-            //echo ($uid['user_id']);
-
+            //saving uid to into  $_SESSION variable.
             $_SESSION['uid'] = $uid['uid'];
-            $_SESSION['u_email'] = $email;
-            //echo "New user created";
             header('Location: index.php');
         } else {
             $error = "Error in Given data";

@@ -4,14 +4,15 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    //calling Stored procedure select_login
     $query = "CALL select_login('$email','$password')";
     $results = mysqli_query($db_connect, $query);
     $count = mysqli_num_rows($results);
+    //checking user count=1
     if ($count == 1) {
         $user_data = mysqli_fetch_array($results);
-        //echo ($user_data['user_id']);
+        //saving uid to into  $_SESSION variable.
         $_SESSION['uid'] = $user_data['user_id'];
-        $_SESSION['u_email'] = $user_data['email'];
         header('Location: index.php');
     } else {
 
@@ -19,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 else {
+    //checking whether $_SESSION['uid'] has a value. 
     if (isset($_SESSION['uid'])) {
+        //if a value is present redirecting to home page
         header("location:index.php");
         die();
     }

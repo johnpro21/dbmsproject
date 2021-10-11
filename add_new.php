@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $reqster_phno = $_POST['reqster_phno'];
     $reqster_uid = $_POST['reqster_uid'];
     $reqster_h_name = $_POST['reqster_h_name'];
+    //inserting into resource_rqst
     $add_query = "INSERT INTO resource_rqst (description,quantity,resource_type,reqster_name,reqster_phno,reqster_uid,reqster_h_name) VALUES ('$description','$quantity','$resource_type','$reqster_name','$reqster_phno','$reqster_uid','$reqster_h_name');";
     $add_result=mysqli_query($db_connect,$add_query);
     if($add_result)

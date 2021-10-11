@@ -27,15 +27,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li> -->
+                
                 </ul>
                 <div class="navbar-nav">
                     <li class="nav-item">
@@ -86,8 +78,6 @@ $user_data = mysqli_fetch_assoc($userdata_result);
         <img src="./logo.png" class="img-fluid" />
         <p style="font-size: 7.5pt;">&copy;2021 GECSKP (IT) B1G2</p>
     </div>
-
-    <!-- <script src="/js/bootstrap.min.js"></script> -->
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -1,9 +1,9 @@
 <?php
 
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "dbms_project";
+// $db_host = "localhost";
+// $db_user = "root";
+// $db_pass = "";
+// $db_name = "dbms_project";
 
 $db_host = "151.106.116.46";
 $db_user = "u776657329_gecskp";
