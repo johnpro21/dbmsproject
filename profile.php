@@ -45,6 +45,7 @@ $user_data = mysqli_fetch_assoc($userdata_result);
 
         <form class="col-md-4 bg-light bg-gradient text-center shadow p-3 mb-5 rounded-3 " method="POST">
             <?php
+            //calling stored procedure SelectUserData
             $userdata_query = "CALL SelectUserData('$uid');";
             $userdata_result = mysqli_query($db_connect, $userdata_query);
             $user_data = mysqli_fetch_assoc($userdata_result);

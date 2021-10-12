@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     session_start();
     if($result)
     {
-        //if profile updated setting value $_SESSION['status']
+        //if profile updated setting value
         $_SESSION['status']="Your Profile Updated Succesfully";
         header("location:profile.php");
     }

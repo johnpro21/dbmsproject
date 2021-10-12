@@ -5,7 +5,7 @@ $uid = $_SESSION['uid'];
 $userdata_query = "SELECT * from users where uid='{$uid}'";
 $userdata_result = mysqli_query($db_connect, $userdata_query);
 $user_data = mysqli_fetch_assoc($userdata_result);
-$_SESSION['status']="";
+$_SESSION['status'] = "";
 
 
 ?>
@@ -78,7 +78,7 @@ $_SESSION['status']="";
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                   
+
                 </ul>
                 <div class="navbar-nav">
                     <li class="nav-item">
